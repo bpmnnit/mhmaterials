@@ -1,0 +1,171 @@
+{% extends 'promh/base.html' %}
+{% block title %}{{ well.well_code }}{% endblock %}
+{% block wells_active %}active{% endblock %}
+
+{% if not casing %}
+	{% block create_casing %}
+		<li>
+            <a href="{% url 'promh:create_casing' well.id %}">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Add Casing
+            </a>
+        </li>
+	{% endblock %}
+{% endif %}
+
+{% if not liner %}
+	{% block create_liner %}
+		<li>
+            <a href="{% url 'promh:create_liner' well.id %}">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Add Liner
+            </a>
+        </li>
+	{% endblock %}
+{% endif %}
+
+{% if not drainholeliner %}
+	{% block create_drainholeliner %}
+		<li>
+            <a href="{% url 'promh:create_drainholeliner' well.id %}">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Add DrainholeLiner
+            </a>
+        </li>
+	{% endblock %}
+{% endif %}
+
+{% if not wellhead %}
+	{% block create_wellhead %}
+		<li>
+            <a href="{% url 'promh:create_wellhead' well.id %}">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Add Wellhead
+            </a>
+        </li>
+	{% endblock %}
+{% endif %}
+
+{% block body %}
+	{% if well %}
+		<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Well Name</th>
+						<th>Platform</th>
+		        		<th>Area</th>
+		        		<th>Category</th>
+		        		<th>Jobtype</th>
+		        		<th>Layer</th>
+		        	</tr>
+		        </thead>
+		        <tbody>
+		        	<tr>
+						<td>{{ well.well_code }}</a></td>
+						<td>{{ well.platform }}</td>
+						<td>{{ well.well_area }}</td>
+						<td>{{ well.well_category }}</td>
+						<td>{{ well.well_jobtype }}</td>
+						<td>{{ well.well_layer }}</td>	
+					</tr>		
+				</tbody>	
+		</table>
+	{% else %}
+		<p><strong>Well not found</strong></p>	
+	{% endif %}
+
+	{% if casing %}
+		<h3>{{ well.well_code}} Casings:</h3>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>30" Casing</th>
+					<th>20" Casing</th>
+	        		<th>13"3/8 Casing</th>
+	        		<th>11"3/4 Casing</th>
+	        		<th>9"5/8 Casing</th>
+	        	</tr>
+	        </thead>
+	        <tbody>
+	        	{% for c in well.casing_set.all %}
+	        		<tr>
+	        			<td style="color: {{ c.casing_size_30_status_color }};">{{ c.casing_size_30 }}</td>
+	        			<td style="color: {{ c.casing_size_20_status_color }};">{{ c.casing_size_20 }}</td>
+	        			<td style="color: {{ c.casing_size_13_3by8_status_color }};">{{ c.casing_size_13_3by8 }}</td>
+	        			<td style="color: {{ c.casing_size_11_3by4_status_color }};">{{ c.casing_size_11_3by4 }}</td>
+	        			<td style="color: {{ c.casing_size_9_5by8_status_color }};">{{ c.casing_size_9_5by8 }}</td>
+	        		</tr>
+	        	{% endfor  %}	
+	        </tbody>
+	    </table>
+	{% else %}
+		<h3>{{ well.well_code}} Casings:&nbsp;</h3><h4>No casings found.</h4>
+	{% endif %}
+
+	{% if liner %}    
+	    <h3>{{ well.well_code}} Liners:</h3>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>7" Liner</th>
+					<th>5" Liner</th>
+	        	</tr>
+	        </thead>
+	        <tbody>
+	        	{% for l in well.liner_set.all %}
+	        		<tr>
+	        			<td style="color: {{ l.liner_size_7_status_color }};">{{ l.liner_size_7 }}</td>
+	        			<td style="color: {{ l.liner_size_5_status_color }};">{{ l.liner_size_5 }}</td>
+	        		</tr>
+	        	{% endfor  %}	
+	        </tbody>
+	    </table>
+	{% else %}
+		<h3>{{ well.well_code}} Liners:&nbsp;</h3><h4>No liners found.</h4>
+	{% endif %} 
+
+	{% if drainholeliner %}    
+	    <h3>{{ well.well_code}} DrainholeLiners:</h3>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>5" Liner</th>
+					<th>3"1/2 Liner</th>
+	        	</tr>
+	        </thead>
+	        <tbody>
+	        	{% for l in well.drainholeliner_set.all %}
+	        		<tr>
+	        			<td style="color: {{ l.drainholeliner_size_5_status_color }};">{{ l.liner_size_5 }}</td>
+	        			<td style="color: {{ l.drainholeliner_size_3_1by2_status_color }};">{{ l.liner_size_3_1by2 }}</td>
+	        		</tr>
+	        	{% endfor  %}	
+	        </tbody>
+	    </table>
+	{% else %}
+		<h3>{{ well.well_code}} DrainholeLiners:&nbsp;</h3><h4>No drainhole liners found.</h4>
+	{% endif %}
+
+	{% if wellhead %}    
+	    <h3>{{ well.well_code}} Wellheads:</h3>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>A Section</th>
+					<th>B Section</th>
+					<th>C Section</th>
+					<th>Xmas Tree</th>
+	        	</tr>
+	        </thead>
+	        <tbody>
+	        	{% for l in well.wellhead_set.all %}
+	        		<tr>
+	        			<td style="color: {{ l.wellhead_a_section_status_color }};">{{ l.wellhead_a_section }}</td>
+	        			<td style="color: {{ l.wellhead_b_section_status_color }};">{{ l.wellhead_b_section }}</td>
+	        			<td style="color: {{ l.wellhead_c_section_status_color }};">{{ l.wellhead_c_section }}</td>
+	        			<td style="color: {{ l.wellhead_xmas_tree_status_color }};">{{ l.wellhead_xmas_tree }}</td>
+	        		</tr>
+	        	{% endfor  %}	
+	        </tbody>
+	    </table>
+	{% else %}
+		<h3>{{ well.well_code}} Wellheads:&nbsp;</h3><h4>No wellheads found.</h4>
+	{% endif %}
+
+{% endblock %}	

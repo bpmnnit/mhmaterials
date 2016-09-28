@@ -1,0 +1,36 @@
+{% extends 'promh/base.html' %}
+{% block wells_active %}active{% endblock %}
+{% block create_well %}
+<li>
+	<a href="{% url 'promh:create_well' %}">
+		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Add Well
+	</a>
+</li>
+{% endblock %}
+
+{% block body %}
+	{% if wells %}
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Well</th>
+	        		<th>Platform</th>
+	        		<th>Process Complex</th>
+	        		<th>Rig</th>
+	        	</tr>
+	        </thead>
+	        <tbody>
+	        	{% for well in wells %}
+					<tr>
+						<td><a href="{% url 'promh:detail' well.id %}">{{ well.well_code}}</a></td>
+						<td>{{ well.platform }}</td>
+						<td>{{ well.platform.process_complex }}</td>
+						<td>{{ well.platform.rig }}</td>
+					</tr>		
+				{% endfor %}
+			</tbody>	
+		</table>
+	{% else %}
+		<p>No wells are available.</p>
+	{% endif %}
+{% endblock %}	

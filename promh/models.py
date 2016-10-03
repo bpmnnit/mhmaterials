@@ -17,9 +17,10 @@ def get_color(n):
 # Create your models here.
 @python_2_unicode_compatible
 class Rig(models.Model):
-	rig_name = models.CharField(max_length=50)
+	rig_name = models.CharField(max_length=50, unique=True)
 	rig_description = models.TextField(max_length = 1024)
 	pub_date = models.DateTimeField('Date Published')
+	user = models.ForeignKey(User, default=1)
 
 	def __str__(self):
 		return self.rig_name
@@ -29,9 +30,10 @@ class Rig(models.Model):
 
 @python_2_unicode_compatible
 class ProcessComplex(models.Model):
-	process_complex_code = models.CharField(max_length=20)
+	process_complex_code = models.CharField(max_length=20, unique=True)
 	process_complex_description = models.TextField(max_length=1024)
 	pub_date = models.DateTimeField('Date Published')
+	user = models.ForeignKey(User, default=1)
 
 	def __str__(self):
 		return self.process_complex_code
@@ -41,11 +43,12 @@ class ProcessComplex(models.Model):
 
 @python_2_unicode_compatible
 class Platform(models.Model):
-	platform_code = models.CharField(max_length=20)
+	platform_code = models.CharField(max_length=20, unique=True)
 	platform_description = models.TextField(max_length=1024)
 	pub_date = models.DateTimeField('Date Published')
 	process_complex = models.ForeignKey('ProcessComplex', on_delete=models.CASCADE)
 	rig = models.ForeignKey('Rig', on_delete=models.CASCADE)
+	user = models.ForeignKey(User, default=1)
 
 	def __str__(self):
 		return self.platform_code
@@ -63,7 +66,7 @@ class Well(models.Model):
 		(MHN, 'MHN'),
 	)
 	well_area = models.CharField(choices=WELL_AREA_CHOICES, max_length=10)
-	well_code = models.CharField(max_length=20)
+	well_code = models.CharField(max_length=20, unique=True)
 	well_description = models.TextField(max_length=1024)
 	well_category = models.CharField(max_length=20)
 	well_jobtype = models.CharField(max_length=20)

@@ -8,6 +8,30 @@
 </li>
 {% endblock %}
 
+{% block create_platform %}
+<li>
+	<a href="{% url 'promh:create_platform' %}">
+		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Add Platform
+	</a>
+</li>
+{% endblock %}
+
+{% block create_rig %}
+<li>
+	<a href="{% url 'promh:create_rig' %}">
+		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Add Rig
+	</a>
+</li>
+{% endblock %}
+
+{% block create_complex %}
+<li>
+	<a href="{% url 'promh:create_processcomplex' %}">
+		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Add Process Complex
+	</a>
+</li>
+{% endblock %}
+
 {% block body %}
 	{% if wells %}
 		<table class="table table-striped">
@@ -22,10 +46,10 @@
 	        <tbody>
 	        	{% for well in wells %}
 					<tr>
-						<td><a href="{% url 'promh:detail' well.id %}">{{ well.well_code}}</a></td>
-						<td>{{ well.platform }}</td>
-						<td>{{ well.platform.process_complex }}</td>
-						<td>{{ well.platform.rig }}</td>
+						<td><a href="{% url 'promh:detail' well.id %}">{{ well }}</a></td>
+						<td><a href="{% url 'promh:platform_detail' well.platform.id %}">{{ well.platform }}</a></td>
+						<td><a href="{% url 'promh:processcomplex_detail' well.platform.process_complex.id %}">{{ well.platform.process_complex }}</a></td>
+						<td><a href="{% url 'promh:rig_detail' well.platform.rig.id %}">{{ well.platform.rig }}</a></td>
 					</tr>		
 				{% endfor %}
 			</tbody>	

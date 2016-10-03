@@ -1,0 +1,18 @@
+{% extends 'promh/base.html' %}
+{% block title %}{{ well.well_code }}{% endblock %}
+{% block wells_active %}active{% endblock %}
+
+{% block body %}
+	{% if platform %}
+		<p><h3>Platform </h3><h2>{{ platform }}</h2><h3> has been added successfully.</h3>	
+	{% endif %}
+
+	{% if processcomplex %}
+		<p><h3>Process Complex </h3><h2>{{ processcomplex }}</h2><h3> has been added successfully.</h3>	
+	{% endif %}
+
+	{% if rig %}
+		<p><h3>Rig </h3><h2>{{ rig }}</h2><h3> has been added successfully.</h3>	
+	{% endif %}
+
+{% endblock %}

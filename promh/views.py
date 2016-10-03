@@ -1,5 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
-from .forms import UserForm, WellForm, CasingForm, LinerForm, DrainholeLinerForm, WellheadForm
+from .forms import UserForm, WellForm, CasingForm, LinerForm, DrainholeLinerForm, WellheadForm, RigForm, PlatformForm, ProcessComplexForm
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
@@ -19,9 +19,13 @@ def index(request):
             wells = wells.filter(
                 Q(well_code__icontains = query)
             ).distinct()
-            return render(request, 'promh/index.html', { 'wells': wells })
+            return render(request, 'promh/index.html', {
+                'wells': wells,
+            })
         else:
-            return render(request, 'promh/index.html', { 'wells': wells })
+            return render(request, 'promh/index.html', {
+                'wells': wells,
+            })
 
 def detail(request, well_id):
     if not request.user.is_authenticated():
@@ -41,6 +45,39 @@ def detail(request, well_id):
 
         }
         return render(request, 'promh/detail.html', context)
+
+def platform_detail(request, platform_id):
+    if not request.user.is_authenticated():
+        return render(request, 'promh/login.html')
+    else:
+        platform = get_object_or_404(Platform, pk = platform_id)
+        context = {
+            'platform': platform,
+
+        }
+        return render(request, 'promh/platform_detail.html', context)
+
+def processcomplex_detail(request, processcomplex_id):
+    if not request.user.is_authenticated():
+        return render(request, 'promh/login.html')
+    else:
+        processcomplex = get_object_or_404(ProcessComplex, pk = processcomplex_id)
+        context = {
+            'processcomplex': processcomplex,
+
+        }
+        return render(request, 'promh/processcomplex_detail.html', context)
+
+def rig_detail(request, rig_id):
+    if not request.user.is_authenticated():
+        return render(request, 'promh/login.html')
+    else:
+        rig = get_object_or_404(Rig, pk = rig_id)
+        context = {
+            'rig': rig,
+
+        }
+        return render(request, 'promh/rig_detail.html', context)               
 
 def create_well(request):
     if not request.user.is_authenticated():
@@ -167,7 +204,64 @@ def create_wellhead(request, well_id):
             "well": ww,
             "form": form,
         }
-        return render(request, 'promh/create_wellhead.html', context)                                     
+        return render(request, 'promh/create_wellhead.html', context)
+
+def create_rig(request):
+    if not request.user.is_authenticated():
+        return render(request, 'promh/login.html')
+    else:
+        form = RigForm(request.POST or None)
+        if form.is_valid():
+            rig = form.save(commit=False)
+            rig.user = request.user
+            rig.rig_name = rig.rig_name.upper()
+            rig.save()
+            context = {
+                'rig': rig,
+            }
+            return render(request, 'promh/success.html', context)
+        context = {
+            "form": form,
+        }
+        return render(request, 'promh/create_rig.html', context)
+
+def create_processcomplex(request):
+    if not request.user.is_authenticated():
+        return render(request, 'promh/login.html')
+    else:
+        form = ProcessComplexForm(request.POST or None)
+        if form.is_valid():
+            processcomplex = form.save(commit=False)
+            processcomplex.user = request.user
+            processcomplex.process_complex_code = processcomplex.process_complex_code.upper()
+            processcomplex.save()
+            context = {
+                'processcomplex': processcomplex,
+            }
+            return render(request, 'promh/success.html', context)
+        context = {
+            "form": form,
+        }
+        return render(request, 'promh/create_processcomplex.html', context)
+
+def create_platform(request):
+    if not request.user.is_authenticated():
+        return render(request, 'promh/login.html')
+    else:
+        form = PlatformForm(request.POST or None)
+        if form.is_valid():
+            platform = form.save(commit=False)
+            platform.user = request.user
+            platform.platform_code = platform.platform_code.upper()
+            platform.save()
+            context = {
+                'platform': platform,
+            }
+            return render(request, 'promh/success.html', context)
+        context = {
+            "form": form,
+        }
+        return render(request, 'promh/create_platform.html', context)                                                      
 
 def register(request):
     form = UserForm(request.POST or None)
@@ -188,6 +282,12 @@ def register(request):
         "form": form,
     }
     return render(request, 'promh/register.html', context)
+
+def delete_well(request, well_id):
+    well = Well.objects.get(pk=well_id)
+    well.delete()
+    wells = Well.objects.all()
+    return render(request, 'promh/index.html', {'wells': wells})
 
 def login_user(request):
     if request.method == "POST":

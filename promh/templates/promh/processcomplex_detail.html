@@ -1,0 +1,31 @@
+{% extends 'promh/base.html' %}
+{% block title %}{{ well.well_code }}{% endblock %}
+{% block wells_active %}active{% endblock %}
+
+{% block body %}
+	{% if processcomplex %}
+		<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Process Complex</th>
+		        		<th>Platforms</th>
+		        	</tr>
+		        </thead>
+		        <tbody>
+		        	<tr>
+						<td>{{ processcomplex }}</td>
+						<td>
+							<ul>
+								{% for platform in processcomplex.platform_set.all %}
+									<li>{{ platform }}</li>
+								{% endfor %}	
+								</ul>
+						</td>
+					</tr>		
+				</tbody>	
+		</table>
+	{% else %}
+		<p><strong>Process Complex not found</strong></p>	
+	{% endif %}
+
+{% endblock %}	

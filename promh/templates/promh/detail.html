@@ -53,6 +53,7 @@
 		        		<th>Category</th>
 		        		<th>Jobtype</th>
 		        		<th>Layer</th>
+		        		<th>Action</th>
 		        	</tr>
 		        </thead>
 		        <tbody>
@@ -62,7 +63,16 @@
 						<td>{{ well.well_area }}</td>
 						<td>{{ well.well_category }}</td>
 						<td>{{ well.well_jobtype }}</td>
-						<td>{{ well.well_layer }}</td>	
+						<td>{{ well.well_layer }}</td>
+						<td>
+							<form action="{% url 'promh:delete_well' well.id %}" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="well_id" value="{{ well.id }}" />
+                               	<button type="submit" class="btn btn-danger btn-xs">
+                                	<span class="glyphicon glyphicon-trash"></span>&nbsp; Delete
+                                </button>
+                            </form>
+                        </td>
 					</tr>		
 				</tbody>	
 		</table>

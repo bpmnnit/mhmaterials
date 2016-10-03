@@ -1,0 +1,31 @@
+{% extends 'promh/base.html' %}
+{% block title %}{{ well.well_code }}{% endblock %}
+{% block wells_active %}active{% endblock %}
+
+{% block body %}
+	{% if rig %}
+		<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Rig</th>
+		        		<th>Platforms</th>
+		        	</tr>
+		        </thead>
+		        <tbody>
+		        	<tr>
+						<td>{{ rig }}</td>
+						<td>
+							<ul>
+								{% for platform in rig.platform_set.all %}
+									<li>{{ platform }}</li>
+								{% endfor %}	
+								</ul>
+						</td>
+					</tr>		
+				</tbody>	
+		</table>
+	{% else %}
+		<p><strong>Rig not found</strong></p>	
+	{% endif %}
+
+{% endblock %}	

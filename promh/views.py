@@ -151,9 +151,11 @@ def create_casing(request, well_id):
             }
             return render(request, 'promh/detail.html', context)
         ww = get_object_or_404(Well, pk = well_id)     
+        stock = Stock.objects.all()  
         context = {
             "well": ww,
             "form": form,
+            'stock': stock,
         }
         return render(request, 'promh/create_casing.html', context)
 
@@ -175,12 +177,16 @@ def create_liner(request, well_id):
                 'casing': w.casing_set.all(),
                 'drainholeliner': w.drainholeliner_set.all(),
                 'wellhead': w.wellhead_set.all(),
+                'stock': stock,
             }
             return render(request, 'promh/detail.html', context)
-        ww = get_object_or_404(Well, pk = well_id)    
+        ww = get_object_or_404(Well, pk = well_id)
+        stock = Stock.objects.all()  
         context = {
-            "well": ww,
-            "form": form,
+            'well': ww,
+            'form': form,
+            'stock': stock,
+
         }
         return render(request, 'promh/create_liner.html', context)
 
@@ -204,10 +210,12 @@ def create_drainholeliner(request, well_id):
                 'wellhead': w.wellhead_set.all(),
             }
             return render(request, 'promh/detail.html', context)
-        ww = get_object_or_404(Well, pk = well_id)    
+        ww = get_object_or_404(Well, pk = well_id)
+        stock = Stock.objects.all()    
         context = {
-            "well": ww,
-            "form": form,
+            'well': ww,
+            'form': form,
+            'stock': stock,
         }
         return render(request, 'promh/create_drainholeliner.html', context)
 
@@ -231,10 +239,12 @@ def create_wellhead(request, well_id):
                 'drainholeliner': w.drainholeliner_set.all(),
             }
             return render(request, 'promh/detail.html', context)
-        ww = get_object_or_404(Well, pk = well_id)    
+        ww = get_object_or_404(Well, pk = well_id)
+        stock = Stock.objects.all()      
         context = {
-            "well": ww,
-            "form": form,
+            'well': ww,
+            'form': form,
+            'stock': stock,
         }
         return render(request, 'promh/create_wellhead.html', context)
 
@@ -332,8 +342,8 @@ def login_user(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                wells = Well.objects.all()
-                return render(request, 'promh/index.html', {'wells': wells})
+                stock = Stock.objects.all()
+                return render(request, 'promh/index.html', {'stock': stock})
             else:
                 return render(request, 'promh/login.html', {'error_message': 'Your account has been disabled'})
         else:
@@ -344,6 +354,6 @@ def logout_user(request):
     logout(request)
     form = UserForm(request.POST or None)
     context = {
-        "form": form,
+        'form': form,
     }
     return render(request, 'promh/login.html', context)   	

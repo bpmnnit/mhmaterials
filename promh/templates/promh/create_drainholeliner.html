@@ -30,17 +30,26 @@
         <div class="col-sm-12 col-md-5">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <h3>What is Viberr?</h3>
-                    <p>Viberr is an app that allows you to upload and store all of your music on the cloud.</p>
-                    <h3>How do I add music?</h3>
-                    <p>First, create a new album by filling out the form on this page. Once an album is created you will be able to add/upload songs.</p>
-                    <h3>What are some Album logo best practices?</h3>
-                    <ul>
-                        <li>Have a resolution of 512x512</li>
-                        <li>Use common image formats such as .JPG, .GIF, or .PNG</li>
-                        <li>Remain under the 2MB limit.</li>
-                        <li>Square images look best</li>
-                    </ul>
+                    <h3>Drainhole Liner available in stock</h3>
+                    {% if stock %}
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>5" D/h Liner</th>
+                                    <th>3-1/2" D/h Liner</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for s in stock %}
+                                <tr>
+                                    <td>{{ s.dh_liner_size_5 }}</td>
+                                    <td>{{ s.dh_liner_size_3_1by2 }}</td>
+                                </tr>
+                            {% endfor %}    
+                            </tbody>
+                        </table>
+                        <p class="text-warning">Make sure that you do not add an amount which exceeds the one in the stock.</p>
+                    {% endif %}  
                 </div>
             </div>
         </div>

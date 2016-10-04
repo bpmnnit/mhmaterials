@@ -9,6 +9,7 @@ from .models import Casing
 from .models import Liner
 from .models import DrainholeLiner
 from .models import Wellhead
+from .models import Stock
 
 class RigAdmin(admin.ModelAdmin):
 	list_display = ('rig_name', 'rig_description', 'pub_date', 'was_published_recently')
@@ -36,3 +37,4 @@ admin.site.register(Casing, CasingAdmin)
 admin.site.register(Liner, LinerAdmin)
 admin.site.register(DrainholeLiner)
 admin.site.register(Wellhead)
+admin.site.register(Stock)

@@ -1,5 +1,5 @@
 {% extends 'promh/base.html' %}
-{% block wells_active %}active{% endblock %}
+{% block stock_active %}active{% endblock %}
 {% block create_well %}
 <li>
 	<a href="{% url 'promh:create_well' %}">
@@ -33,28 +33,48 @@
 {% endblock %}
 
 {% block body %}
-	{% if wells %}
+	<div class="container-fluid">
+	{% if stock %}
+		<h1>Available material stock of Mumbai High Asset</h1>
+		<p>The stock shows the availability of well equipments. Length units are in meters.</p>
 		<table class="table table-striped">
 			<thead>
 				<tr>
-					<th>Well</th>
-	        		<th>Platform</th>
-	        		<th>Process Complex</th>
-	        		<th>Rig</th>
+					<th>30" Casing</th>
+	        		<th>20" Casing</th>
+	        		<th>13-3/8" Casing</th>
+	        		<th>11-3/4" Casing</th>
+	        		<th>9-5/8" Casing</th>
+	        		<th>7" Liner</th>
+	        		<th>5" Liner</th>
+	        		<th>3-1/2" Liner</th>
+	        		<th>W/H A Section</th>
+	        		<th>W/H B Section</th>
+	        		<th>W/H C Section</th>
+	        		<th>W/H Xmas Tree</th>
 	        	</tr>
 	        </thead>
 	        <tbody>
-	        	{% for well in wells %}
+	        	{% for s in stock %}
 					<tr>
-						<td><a href="{% url 'promh:detail' well.id %}">{{ well }}</a></td>
-						<td><a href="{% url 'promh:platform_detail' well.platform.id %}">{{ well.platform }}</a></td>
-						<td><a href="{% url 'promh:processcomplex_detail' well.platform.process_complex.id %}">{{ well.platform.process_complex }}</a></td>
-						<td><a href="{% url 'promh:rig_detail' well.platform.rig.id %}">{{ well.platform.rig }}</a></td>
+						<td>{{ s.casing_size_30 }}</td>
+						<td>{{ s.casing_size_20 }}</td>
+						<td>{{ s.casing_size_13_3by8 }}</td>
+						<td>{{ s.casing_size_11_3by4 }}</td>
+						<td>{{ s.casing_size_9_5by8 }}</td>
+						<td>{{ s.liner_size_7 }}</td>
+						<td>{{ s.liner_size_5 }}</td>
+						<td>{{ s.liner_size_3_1by2 }}</td>
+						<td>{{ s.wellhead_a_section }}</td>
+						<td>{{ s.wellhead_b_section }}</td>
+						<td>{{ s.wellhead_c_section }}</td>
+						<td>{{ s.wellhead_xmas_tree }}</td>
 					</tr>		
 				{% endfor %}
 			</tbody>	
 		</table>
 	{% else %}
-		<p>No wells are available.</p>
+		<p>No stock found. Please recreate the inventory.</p>
 	{% endif %}
+	</div>
 {% endblock %}	

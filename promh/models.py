@@ -83,6 +83,25 @@ class Well(models.Model):
 		return self.pub_date >= timezone.now() - datetime.timedelta(days=7)	
 
 @python_2_unicode_compatible
+class Stock(models.Model):
+	casing_size_30 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	casing_size_20 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	casing_size_13_3by8 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	casing_size_11_3by4 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	casing_size_9_5by8 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	liner_size_7 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	liner_size_5 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	liner_size_5 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	liner_size_3_1by2 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	wellhead_a_section = models.PositiveSmallIntegerField(default=0)
+	wellhead_b_section = models.PositiveSmallIntegerField(default=0)
+	wellhead_c_section = models.PositiveSmallIntegerField(default=0)
+	wellhead_xmas_tree = models.PositiveSmallIntegerField(default=0)
+
+	def __str__(self):
+		return "Stock of the materials, MH Asset"
+
+@python_2_unicode_compatible
 class Casing(models.Model):
 
 	REQUIRED = 0
@@ -94,15 +113,15 @@ class Casing(models.Model):
 		(INUSE, 'In Use'),
 		(USEDUP, 'Used Up'),
 	)
-	casing_size_30 = models.DecimalField(decimal_places=3, default=Decimal('0.000'), max_digits=10)
+	casing_size_30 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
 	casing_size_30_status = models.PositiveSmallIntegerField(choices=CASING_USAGE_CHOICES, default=REQUIRED)
-	casing_size_20 = models.DecimalField(decimal_places=3, default=Decimal('0.000'), max_digits=10)
+	casing_size_20 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
 	casing_size_20_status = models.PositiveSmallIntegerField(choices=CASING_USAGE_CHOICES, default=REQUIRED)
-	casing_size_13_3by8 = models.DecimalField(decimal_places=3, default=Decimal('0.000'), max_digits=10)
+	casing_size_13_3by8 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
 	casing_size_13_3by8_status = models.PositiveSmallIntegerField(choices=CASING_USAGE_CHOICES, default=REQUIRED)
-	casing_size_11_3by4 = models.DecimalField(decimal_places=3, default=Decimal('0.000'), max_digits=10)
+	casing_size_11_3by4 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
 	casing_size_11_3by4_status = models.PositiveSmallIntegerField(choices=CASING_USAGE_CHOICES, default=REQUIRED)
-	casing_size_9_5by8 = models.DecimalField(decimal_places=3, default=Decimal('0.000'), max_digits=10)
+	casing_size_9_5by8 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
 	casing_size_9_5by8_status = models.PositiveSmallIntegerField(choices=CASING_USAGE_CHOICES, default=REQUIRED)
 	pub_date = models.DateTimeField('Date Published')
 	well = models.ForeignKey(Well, on_delete=models.CASCADE, unique=True)
@@ -142,9 +161,9 @@ class Liner(models.Model):
 		(USEDUP, 'Used Up'),
 	)
 
-	liner_size_7 = models.DecimalField(decimal_places=3, default=Decimal('0.000'), max_digits=10)
+	liner_size_7 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
 	liner_size_7_status = models.PositiveSmallIntegerField(choices=LINER_USAGE_CHOICES, default=REQUIRED)
-	liner_size_5 = models.DecimalField(decimal_places=3, default=Decimal('0.000'), max_digits=10)
+	liner_size_5 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
 	liner_size_5_status = models.PositiveSmallIntegerField(choices=LINER_USAGE_CHOICES, default=REQUIRED)
 	pub_date = models.DateTimeField('Date Published')
 	well = models.ForeignKey(Well, on_delete=models.CASCADE, unique=True)
@@ -175,9 +194,9 @@ class DrainholeLiner(models.Model):
 		(USEDUP, 'Used Up'),
 	)
 
-	liner_size_5 = models.DecimalField(decimal_places=3, default=Decimal('0.000'), max_digits=10)
+	liner_size_5 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
 	liner_size_5_status = models.PositiveSmallIntegerField(choices=DRAINHOLELINER_USAGE_CHOICES, default=REQUIRED)
-	liner_size_3_1by2 = models.DecimalField(decimal_places=3, default=Decimal('0.000'), max_digits=10)
+	liner_size_3_1by2 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
 	liner_size_3_1by2_status = models.PositiveSmallIntegerField(choices=DRAINHOLELINER_USAGE_CHOICES, default=REQUIRED)
 	pub_date = models.DateTimeField('Date Published')
 	well = models.ForeignKey(Well, on_delete=models.CASCADE, unique=True)

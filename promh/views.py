@@ -1,15 +1,42 @@
 from django.contrib.auth import authenticate, login, logout
-from .forms import UserForm, WellForm, CasingForm, LinerForm, DrainholeLinerForm, WellheadForm, RigForm, PlatformForm, ProcessComplexForm
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
 from django.urls import reverse
 from django.views import generic
 
+from .forms import UserForm
+from .forms import WellForm
+from .forms import CasingForm
+from .forms import LinerForm
+from .forms import DrainholeLinerForm
+from .forms import WellheadForm
+from .forms import RigForm
+from .forms import PlatformForm
+from .forms import ProcessComplexForm
 
-from .models import Rig, ProcessComplex, Platform, Well, Casing, Liner, DrainholeLiner, Wellhead
+from .models import Rig
+from .models import ProcessComplex
+from .models import Platform
+from .models import Well
+from .models import Casing
+from .models import Liner
+from .models import DrainholeLiner
+from .models import Wellhead
+from .models import Stock
+
+import datetime
 
 def index(request):
+    if not request.user.is_authenticated():
+        return render(request, 'promh/login.html')
+    else:
+        stock = Stock.objects.all()
+        return render(request, 'promh/index.html', {
+            'stock': stock,
+        })
+
+def wells(request):
     if not request.user.is_authenticated():
         return render(request, 'promh/login.html')
     else:
@@ -19,11 +46,11 @@ def index(request):
             wells = wells.filter(
                 Q(well_code__icontains = query)
             ).distinct()
-            return render(request, 'promh/index.html', {
+            return render(request, 'promh/wells.html', {
                 'wells': wells,
             })
         else:
-            return render(request, 'promh/index.html', {
+            return render(request, 'promh/wells.html', {
                 'wells': wells,
             })
 
@@ -88,6 +115,7 @@ def create_well(request):
             well = form.save(commit=False)
             well.user = request.user
             well.well_code = well.well_code.upper()
+            well.pub_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             well.save()
             context = {
                 'well': well,
@@ -112,6 +140,7 @@ def create_casing(request, well_id):
             casing.user = request.user
             w = get_object_or_404(Well, pk = well_id)
             casing.well = w
+            casing.pub_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             casing.save()
             context = {
                 'casing': casing,
@@ -138,6 +167,7 @@ def create_liner(request, well_id):
             liner.user = request.user
             w = get_object_or_404(Well, pk = well_id)
             liner.well = w
+            liner.pub_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             liner.save()
             context = {
                 'liner': liner,
@@ -164,6 +194,7 @@ def create_drainholeliner(request, well_id):
             drainholeliner.user = request.user
             w = get_object_or_404(Well, pk = well_id)
             drainholeliner.well = w
+            drainholeliner.pub_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             drainholeliner.save()
             context = {
                 'drainholeliner': drainholeliner,
@@ -190,6 +221,7 @@ def create_wellhead(request, well_id):
             wellhead.user = request.user
             w = get_object_or_404(Well, pk = well_id)
             wellhead.well = w
+            wellhead.pub_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             wellhead.save()
             context = {
                 'wellhead': wellhead,
@@ -215,6 +247,7 @@ def create_rig(request):
             rig = form.save(commit=False)
             rig.user = request.user
             rig.rig_name = rig.rig_name.upper()
+            rig.pub_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             rig.save()
             context = {
                 'rig': rig,
@@ -234,6 +267,7 @@ def create_processcomplex(request):
             processcomplex = form.save(commit=False)
             processcomplex.user = request.user
             processcomplex.process_complex_code = processcomplex.process_complex_code.upper()
+            processcomplex.pub_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             processcomplex.save()
             context = {
                 'processcomplex': processcomplex,
@@ -253,6 +287,7 @@ def create_platform(request):
             platform = form.save(commit=False)
             platform.user = request.user
             platform.platform_code = platform.platform_code.upper()
+            platform.pub_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             platform.save()
             context = {
                 'platform': platform,

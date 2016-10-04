@@ -28,7 +28,10 @@
         <!-- Items -->
         <div class="collapse navbar-collapse" id="topNavBar">
             <ul class="nav navbar-nav">
-                <li class="{% block wells_active %}{% endblock %}"><a href="{% url 'promh:index' %}"><span class="glyphicon glyphicon-cd" aria-hidden="true"></span>&nbsp; Wells</a></li>
+                <li class="{% block stock_active %}{% endblock %}"><a href="{% url 'promh:index' %}"><span class="glyphicon glyphicon-tint" aria-hidden="true"></span>&nbsp; Stock</a></li>
+            </ul>
+            <ul class="nav navbar-nav">
+                <li class="{% block wells_active %}{% endblock %}"><a href="{% url 'promh:wells' %}"><span class="glyphicon glyphicon-cd" aria-hidden="true"></span>&nbsp; Wells</a></li>
             </ul>
             <form class="navbar-form navbar-left" role="search" method="get" action="{% url 'promh:index' %}">
                 <div class="form-group">

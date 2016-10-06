@@ -23,7 +23,7 @@ def index(request):
     if not request.user.is_authenticated():
         return render(request, 'promh/login.html')
     else:
-        stock = Stock.objects.all()
+        stock = Stock.objects.all()[0]
         return render(request, 'promh/index.html', {
             'stock': stock,
         })

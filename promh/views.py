@@ -7,10 +7,6 @@ from django.views import generic
 
 from .forms import UserForm
 from .forms import WellForm
-from .forms import CasingForm
-from .forms import LinerForm
-from .forms import DrainholeLinerForm
-from .forms import WellheadForm
 from .forms import RigForm
 from .forms import PlatformForm
 from .forms import ProcessComplexForm
@@ -19,10 +15,6 @@ from .models import Rig
 from .models import ProcessComplex
 from .models import Platform
 from .models import Well
-from .models import Casing
-from .models import Liner
-from .models import DrainholeLiner
-from .models import Wellhead
 from .models import Stock
 
 import datetime

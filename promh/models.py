@@ -65,6 +65,17 @@ class Well(models.Model):
 		(MHS, 'MHS'),
 		(MHN, 'MHN'),
 	)
+
+	REQUIRED = 0
+	INUSE = 1
+	USEDUP = 2
+
+	USAGE_CHOICES = (
+		(REQUIRED, 'Required'),
+		(INUSE, 'In Use'),
+		(USEDUP, 'Used Up'),
+	)
+
 	well_area = models.CharField(choices=WELL_AREA_CHOICES, max_length=10)
 	well_code = models.CharField(max_length=20, unique=True)
 	well_description = models.TextField(max_length=1024)
@@ -76,59 +87,74 @@ class Well(models.Model):
 	platform = models.ForeignKey('Platform', on_delete=models.CASCADE)
 	user = models.ForeignKey(User, default=1)
 
+	casing_size_30 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	casing_size_30_status = models.PositiveSmallIntegerField(choices=USAGE_CHOICES, default=REQUIRED)
+	casing_size_20 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	casing_size_20_status = models.PositiveSmallIntegerField(choices=USAGE_CHOICES, default=REQUIRED)
+	casing_size_18_5by8 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	casing_size_18_5by8_status = models.PositiveSmallIntegerField(choices=USAGE_CHOICES, default=REQUIRED)
+	casing_size_13_3by8 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	casing_size_13_3by8_status = models.PositiveSmallIntegerField(choices=USAGE_CHOICES, default=REQUIRED)
+	float_joint_11_3by4 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	float_joint_11_3by4_status = models.PositiveSmallIntegerField(choices=USAGE_CHOICES, default=REQUIRED)
+	casing_size_9_5by8 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	casing_size_9_5by8_status = models.PositiveSmallIntegerField(choices=USAGE_CHOICES, default=REQUIRED)
+	prem_casing_9_5by8 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	prem_casing_9_5by8_status = models.PositiveSmallIntegerField(choices=USAGE_CHOICES, default=REQUIRED)
+	btc_9_5by8 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	btc_9_5by8_status = models.PositiveSmallIntegerField(choices=USAGE_CHOICES, default=REQUIRED)
+	chrome_casing_9_5by8 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	chrome_casing_9_5by8_status = models.PositiveSmallIntegerField(choices=USAGE_CHOICES, default=REQUIRED)
+	float_joint_9_5by8 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	float_joint_9_5by8_status = models.PositiveSmallIntegerField(choices=USAGE_CHOICES, default=REQUIRED)
+	float_joint_liner_11_3by4_large = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	float_joint_liner_11_3by4_large_status = models.PositiveSmallIntegerField(choices=USAGE_CHOICES, default=REQUIRED)
+	liner_size_7 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	liner_size_7_status = models.PositiveSmallIntegerField(choices=USAGE_CHOICES, default=REQUIRED)
+	liner_hanger_7 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	liner_hanger_7_status = models.PositiveSmallIntegerField(choices=USAGE_CHOICES, default=REQUIRED)
+	chrome_liner_size_7 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	chrome_liner_size_7_status = models.PositiveSmallIntegerField(choices=USAGE_CHOICES, default=REQUIRED)
+	chrome_liner_hanger_7 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	chrome_liner_hanger_7_status = models.PositiveSmallIntegerField(choices=USAGE_CHOICES, default=REQUIRED)
+	liner_size_5 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	liner_size_5_status = models.PositiveSmallIntegerField(choices=USAGE_CHOICES, default=REQUIRED)
+	liner_hanger_5 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	liner_hanger_5_status = models.PositiveSmallIntegerField(choices=USAGE_CHOICES, default=REQUIRED)
+	
+	float_shoe_size_20 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	float_shoe_size_20_status = models.PositiveSmallIntegerField(choices=USAGE_CHOICES, default=REQUIRED)
+	float_shoe_size_18_5by8 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	float_shoe_size_18_5by8_status = models.PositiveSmallIntegerField(choices=USAGE_CHOICES, default=REQUIRED)
+	float_shoe_size_13_3by8 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	float_shoe_size_13_3by8_status = models.PositiveSmallIntegerField(choices=USAGE_CHOICES, default=REQUIRED)
+	float_shoe_size_9_5by8 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	float_shoe_size_9_5by8_status = models.PositiveSmallIntegerField(choices=USAGE_CHOICES, default=REQUIRED)
+
+	float_collar_size_13_3by8 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	float_collar_size_13_3by8_status = models.PositiveSmallIntegerField(choices=USAGE_CHOICES, default=REQUIRED)
+	float_collar_size_9_5by8 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	float_collar_size_9_5by8_status = models.PositiveSmallIntegerField(choices=USAGE_CHOICES, default=REQUIRED)
+
+	btc_pin_prem_box_cross_over_9_5by8 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	btc_pin_prem_box_cross_over_9_5by8_status = models.PositiveSmallIntegerField(choices=USAGE_CHOICES, default=REQUIRED)
+	btc_box_prem_pin_cross_over_9_5by8 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	btc_box_prem_pin_cross_over_9_5by8_status = models.PositiveSmallIntegerField(choices=USAGE_CHOICES, default=REQUIRED)
+
+	wellhead_a_section = models.PositiveSmallIntegerField(default=0)
+	wellhead_a_section_status = models.PositiveSmallIntegerField(choices=USAGE_CHOICES, default=REQUIRED)
+	wellhead_b_section = models.PositiveSmallIntegerField(default=0)
+	wellhead_b_section_status = models.PositiveSmallIntegerField(choices=USAGE_CHOICES, default=REQUIRED)
+	wellhead_c_section = models.PositiveSmallIntegerField(default=0)
+	wellhead_c_section_status = models.PositiveSmallIntegerField(choices=USAGE_CHOICES, default=REQUIRED)	
+	wellhead_xmas_tree = models.PositiveSmallIntegerField(default=0)
+	wellhead_xmas_tree_status = models.PositiveSmallIntegerField(choices=USAGE_CHOICES, default=REQUIRED)
+
 	def __str__(self):
 		return self.well_code
 
 	def was_published_recently(self):
-		return self.pub_date >= timezone.now() - datetime.timedelta(days=7)	
-
-@python_2_unicode_compatible
-class Stock(models.Model):
-	casing_size_30 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
-	casing_size_20 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
-	casing_size_13_3by8 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
-	casing_size_11_3by4 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
-	casing_size_9_5by8 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
-	liner_size_7 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
-	liner_size_5 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
-	dh_liner_size_5 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
-	dh_liner_size_3_1by2 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
-	wellhead_a_section = models.PositiveSmallIntegerField(default=0)
-	wellhead_b_section = models.PositiveSmallIntegerField(default=0)
-	wellhead_c_section = models.PositiveSmallIntegerField(default=0)
-	wellhead_xmas_tree = models.PositiveSmallIntegerField(default=0)
-
-	def __str__(self):
-		return "Stock of the materials, MH Asset"
-
-@python_2_unicode_compatible
-class Casing(models.Model):
-
-	REQUIRED = 0
-	INUSE = 1
-	USEDUP = 2
-
-	CASING_USAGE_CHOICES = (
-		(REQUIRED, 'Required'),
-		(INUSE, 'In Use'),
-		(USEDUP, 'Used Up'),
-	)
-	casing_size_30 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
-	casing_size_30_status = models.PositiveSmallIntegerField(choices=CASING_USAGE_CHOICES, default=REQUIRED)
-	casing_size_20 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
-	casing_size_20_status = models.PositiveSmallIntegerField(choices=CASING_USAGE_CHOICES, default=REQUIRED)
-	casing_size_13_3by8 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
-	casing_size_13_3by8_status = models.PositiveSmallIntegerField(choices=CASING_USAGE_CHOICES, default=REQUIRED)
-	casing_size_11_3by4 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
-	casing_size_11_3by4_status = models.PositiveSmallIntegerField(choices=CASING_USAGE_CHOICES, default=REQUIRED)
-	casing_size_9_5by8 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
-	casing_size_9_5by8_status = models.PositiveSmallIntegerField(choices=CASING_USAGE_CHOICES, default=REQUIRED)
-	pub_date = models.DateTimeField('Date Published')
-	well = models.ForeignKey(Well, on_delete=models.CASCADE, unique=True)
-	user = models.ForeignKey(User, default=1)
-
-	def __str__(self):
-		return self.well.well_code + ' Casing'
+		return self.pub_date >= timezone.now() - datetime.timedelta(days=7)
 
 	def was_published_recently(self):
 		return self.pub_date >= timezone.now() - datetime.timedelta(days=7)
@@ -138,120 +164,119 @@ class Casing(models.Model):
 
 	def casing_size_20_status_color(self):
 		return get_color(self.casing_size_20_status)
+	
+	def casing_size_18_5by8_status_color(self):
+		return get_color(self.casing_size_18_5by8_status)
 
 	def casing_size_13_3by8_status_color(self):
 		return get_color(self.casing_size_13_3by8_status)
 
-	def casing_size_11_3by4_status_color(self):
-		return get_color(self.casing_size_11_3by4_status)
+	def float_joint_11_3by4_status_color(self):
+		return get_color(self.float_joint_11_3by4_status)
 
 	def casing_size_9_5by8_status_color(self):
-		return get_color(self.casing_size_9_5by8_status)									
+		return get_color(self.casing_size_9_5by8_status)
 
-@python_2_unicode_compatible
-class Liner(models.Model):
+	def prem_casing_9_5by8_status_color(self):
+		return get_color(self.prem_casing_9_5by8_status)
 
-	REQUIRED = 0
-	INUSE = 1
-	USEDUP = 2
+	def btc_9_5by8_status_color(self):
+		return get_color(self.btc_9_5by8_status)
 
-	LINER_USAGE_CHOICES = (
-		(REQUIRED, 'Required'),
-		(INUSE, 'In Use'),
-		(USEDUP, 'Used Up'),
-	)
-
-	liner_size_7 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
-	liner_size_7_status = models.PositiveSmallIntegerField(choices=LINER_USAGE_CHOICES, default=REQUIRED)
-	liner_size_5 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
-	liner_size_5_status = models.PositiveSmallIntegerField(choices=LINER_USAGE_CHOICES, default=REQUIRED)
-	pub_date = models.DateTimeField('Date Published')
-	well = models.ForeignKey(Well, on_delete=models.CASCADE, unique=True)
-	user = models.ForeignKey(User, default=1)
-
-	def __str__(self):
-		return self.well.well_code + ' Liner'
-
-	def was_published_recently(self):
-		return self.pub_date >= timezone.now() - datetime.timedelta(days=7)
-
+	def chrome_casing_9_5by8_status_color(self):
+		return get_color(self.chrome_casing_9_5by8_status)
+		
+	def float_joint_9_5by8_status_color(self):
+		return get_color(self.float_joint_9_5by8_status)
+		
+	def float_joint_liner_11_3by4_large_status_color(self):
+		return get_color(self.float_joint_liner_11_3by4_large_status)
+		
 	def liner_size_7_status_color(self):
 		return get_color(self.liner_size_7_status)
 
+	def liner_hanger_7_status_color(self):
+		return get_color(self.liner_hanger_7_status)
+	
+	def chrome_liner_size_7_status_color(self):
+		return get_color(self.chrome_liner_size_7_status)
+		
+	def chrome_liner_hanger_7_status_color(self):
+		return get_color(self.chrome_liner_hanger_7_status)
+		
 	def liner_size_5_status_color(self):
-		return get_color(self.liner_size_5_status)	
-
-@python_2_unicode_compatible
-class DrainholeLiner(models.Model):
-
-	REQUIRED = 0
-	INUSE = 1
-	USEDUP = 2
-
-	DRAINHOLELINER_USAGE_CHOICES = (
-		(REQUIRED, 'Required'),
-		(INUSE, 'In Use'),
-		(USEDUP, 'Used Up'),
-	)
-
-	liner_size_5 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
-	liner_size_5_status = models.PositiveSmallIntegerField(choices=DRAINHOLELINER_USAGE_CHOICES, default=REQUIRED)
-	liner_size_3_1by2 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
-	liner_size_3_1by2_status = models.PositiveSmallIntegerField(choices=DRAINHOLELINER_USAGE_CHOICES, default=REQUIRED)
-	pub_date = models.DateTimeField('Date Published')
-	well = models.ForeignKey(Well, on_delete=models.CASCADE, unique=True)
-	user = models.ForeignKey(User, default=1)
-
-	def __str__(self):
-		return self.well.well_code + ' Drainhole Liner'
-
-	def was_published_recently(self):
-		return self.pub_date >= timezone.now() - datetime.timedelta(days=7)
-
-	def drainholeliner_size_5_status_color(self):
 		return get_color(self.liner_size_5_status)
-
-	def drainholeliner_size_3_1by2_status_color(self):
-		return get_color(self.liner_size_3_1by2_status)
-
-@python_2_unicode_compatible
-class Wellhead(models.Model):
-	REQUIRED = 0
-	INUSE = 1
-	USEDUP = 2
-
-	WELLHEAD_USAGE_CHOICES = (
-		(REQUIRED, 'Required'),
-		(INUSE, 'In Use'),
-		(USEDUP, 'Used Up'),
-	)
-
-	wellhead_a_section = models.PositiveSmallIntegerField(default=0)
-	wellhead_a_section_status = models.PositiveSmallIntegerField(choices=WELLHEAD_USAGE_CHOICES, default=REQUIRED)
-	wellhead_b_section = models.PositiveSmallIntegerField(default=0)
-	wellhead_b_section_status = models.PositiveSmallIntegerField(choices=WELLHEAD_USAGE_CHOICES, default=REQUIRED)
-	wellhead_c_section = models.PositiveSmallIntegerField(default=0)
-	wellhead_c_section_status = models.PositiveSmallIntegerField(choices=WELLHEAD_USAGE_CHOICES, default=REQUIRED)	
-	wellhead_xmas_tree = models.PositiveSmallIntegerField(default=0)
-	wellhead_xmas_tree_status = models.PositiveSmallIntegerField(choices=WELLHEAD_USAGE_CHOICES, default=REQUIRED)
-	pub_date = models.DateTimeField('Date Published')
-	well = models.ForeignKey(Well, on_delete=models.CASCADE, unique=True)
-	user = models.ForeignKey(User, default=1)
-
-	def __str__(self):
-		return self.well.well_code + ' Wellhead'
-
-	def was_published_recently(self):
-		return self.pub_date >= timezone.now() - datetime.timedelta(days=7)
+		
+	def liner_hanger_5_status_color(self):
+		return get_color(self.liner_hanger_5_status)
+		
+	def float_shoe_size_20_status_color(self):
+		return get_color(self.float_shoe_size_20_status)
+		
+	def float_shoe_size_18_5by8_status_color(self):
+		return get_color(self.float_shoe_size_18_5by8_status)
+		
+	def float_shoe_size_13_3by8_status_color(self):
+		return get_color(self.float_shoe_size_13_3by8_status)
+		
+	def float_shoe_size_9_5by8_status_color(self):
+		return get_color(self.float_shoe_size_9_5by8_status)
+		
+	def float_collar_size_13_3by8_status_color(self):
+		return get_color(self.float_collar_size_13_3by8_status)
+		
+	def float_collar_size_9_5by8_status_color(self):
+		return get_color(self.float_collar_size_9_5by8_status)
+		
+	def btc_pin_prem_box_cross_over_9_5by8_status_color(self):
+		return get_color(self.btc_pin_prem_box_cross_over_9_5by8_status)
+		
+	def btc_box_prem_pin_cross_over_9_5by8_status_color(self):
+		return get_color(self.btc_box_prem_pin_cross_over_9_5by8_status)
 
 	def wellhead_a_section_status_color(self):
 		return get_color(self.wellhead_a_section_status)
-	
+		
 	def wellhead_b_section_status_color(self):
 		return get_color(self.wellhead_b_section_status)
-
+		
 	def wellhead_c_section_status_color(self):
 		return get_color(self.wellhead_c_section_status)
 		
 	def wellhead_xmas_tree_status_color(self):
-		return get_color(self.wellhead_xmas_tree_status)				
+		return get_color(self.wellhead_xmas_tree_status)
+		
+@python_2_unicode_compatible
+class Stock(models.Model):
+	casing_size_30 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	casing_size_20 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	casing_size_18_5by8 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	casing_size_13_3by8 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	float_joint_11_3by4 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	casing_size_9_5by8 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	prem_casing_9_5by8 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	btc_9_5by8 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	chrome_casing_9_5by8 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	float_joint_9_5by8 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	float_joint_liner_11_3by4_large = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	liner_size_7 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	liner_hanger_7 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	chrome_liner_size_7 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	chrome_liner_hanger_7 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	liner_size_5 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	liner_hanger_5 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	float_shoe_size_20 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	float_shoe_size_18_5by8 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	float_shoe_size_13_3by8 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	float_shoe_size_9_5by8 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	float_collar_size_13_3by8 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	float_collar_size_9_5by8 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	btc_pin_prem_box_cross_over_9_5by8 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	btc_box_prem_pin_cross_over_9_5by8 = models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=10)
+	wellhead_a_section = models.PositiveSmallIntegerField(default=0)
+	wellhead_b_section = models.PositiveSmallIntegerField(default=0)
+	wellhead_c_section = models.PositiveSmallIntegerField(default=0)
+	wellhead_xmas_tree = models.PositiveSmallIntegerField(default=0)
+
+	def __str__(self):
+		return "Stock of the materials, MH Asset"				

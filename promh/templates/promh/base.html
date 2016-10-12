@@ -40,21 +40,17 @@
                 <button type="submit" class="btn btn-default">Search</button>
             </form>
             <ul class="nav navbar-nav navbar-right">
+                {% block update_stock %}
+                {% endblock %}
                 {% block create_well %}
-                {% endblock %}
-                {% block create_casing %}
-                {% endblock %}
-                {% block create_liner %}
-                {% endblock %}
-                {% block create_drainholeliner %}
-                {% endblock %}
-                {% block create_wellhead %}
                 {% endblock %}
                 {% block create_platform %}
                 {% endblock %}
                 {% block create_rig %}
                 {% endblock %}
                 {% block create_complex %}
+                {% endblock %}
+                {% block update_well %}
                 {% endblock %}
                 <li>
                     <a href="{% url 'promh:logout_user' %}">

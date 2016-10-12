@@ -1,34 +1,10 @@
 {% extends 'promh/base.html' %}
 {% block stock_active %}active{% endblock %}
-{% block create_well %}
+{% block update_stock %}
 <li>
-	<a href="{% url 'promh:create_well' %}">
-		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Add Well
-	</a>
-</li>
-{% endblock %}
-
-{% block create_platform %}
-<li>
-	<a href="{% url 'promh:create_platform' %}">
-		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Add Platform
-	</a>
-</li>
-{% endblock %}
-
-{% block create_rig %}
-<li>
-	<a href="{% url 'promh:create_rig' %}">
-		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Add Rig
-	</a>
-</li>
-{% endblock %}
-
-{% block create_complex %}
-<li>
-	<a href="{% url 'promh:create_processcomplex' %}">
-		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Add Process Complex
-	</a>
+	<a href="{% url 'promh:update_stock' %}">
+		<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>&nbsp; Update Stock
+	</a>	
 </li>
 {% endblock %}
 

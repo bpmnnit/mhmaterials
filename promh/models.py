@@ -4,15 +4,16 @@ from django.db import models
 from decimal import Decimal
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils import timezone
+from django.core.urlresolvers import reverse
 import datetime
 
 def get_color(n):
 	if n == 2:
-		return "red"
+		return "text-danger"
 	elif n == 1:
-		return "yellow"
+		return "text-warning"
 	elif n == 0:
-		return "green"
+		return "text-success"
 
 # Create your models here.
 @python_2_unicode_compatible
@@ -279,4 +280,7 @@ class Stock(models.Model):
 	wellhead_xmas_tree = models.PositiveSmallIntegerField(default=0)
 
 	def __str__(self):
-		return "Stock of the materials, MH Asset"				
+		return "Stock of the materials, MH Asset"
+
+	def get_absolute_url(self):
+		return reverse('update_stock', kwargs = { 'pk': self.pk })

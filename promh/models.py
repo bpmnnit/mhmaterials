@@ -284,3 +284,5 @@ class Stock(models.Model):
 
 	def get_absolute_url(self):
 		return reverse('update_stock', kwargs = { 'pk': self.pk })
+
+# This is a demo of git for aishwarya
